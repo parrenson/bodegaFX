@@ -5,15 +5,19 @@
  */
 package modelo;
 
+import bodega.Bodega;
+import data.Producto;
+
 /**
  *
  * @author dayan.lara
  */
 public class tablas {
     
-    private String hacerHtmlCola() {
-String html = "<HTML><Table border=1 width=1";
-
+    private String hacerHtmlpila() {
+        Bodega<Producto> E = new Bodega<>();
+String html = "<HTML><Table border=1 width=100%>";
+html += OperacionesBodega.generarHtml(bodega) + "</Table></HTML>";
 return html;
 }
 }

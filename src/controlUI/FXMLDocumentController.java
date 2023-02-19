@@ -27,11 +27,36 @@ public class FXMLDocumentController implements Initializable {
     
      private TextArea TextArea;
     
+     private boolean iniciar;
+
+    /**
+     * Get the value of iniciar
+     *
+     * @return the value of iniciar
+     */
+    public boolean isIniciar() {
+        return iniciar;
+    }
+
+    /**
+     * Set the value of iniciar
+     *
+     * @param iniciar new value of iniciar
+     */
+    public void setIniciar(boolean iniciar) {
+        this.iniciar = iniciar;
+    }
+
+
+    
+    
     @FXML
     private void btnIniciar(ActionEvent event) {
         
        Bodega<Producto> pilaProductos = new Bodega<>();
-        // Generar entre 1 a 5 productos cada segundo
+       iniciar = true;
+       while(iniciar){
+            // Generar entre 1 a 5 productos cada segundo
         int cantidadProductos = (int)(Math.random() * 5) + 1;
         for (int i = 0; i < cantidadProductos; i++) {
             // Generar un producto aleatorio
@@ -45,12 +70,13 @@ public class FXMLDocumentController implements Initializable {
             pilaProductos.apilar(objP);
             
             TextArea.setText(pilaProductos.toString());
+       }
+   
     }
     
     }
     
-    @FXML
-    private void btnFinalizar(ActionEvent event) {}
+    
         
     
     @Override
