@@ -11,4 +11,9 @@ package modelo;
  */
 public class tablas {
     
+    private String hacerHtmlCola() {
+String html = "<HTML><Table border=1 width=1";
+
+return html;
+}
 }
