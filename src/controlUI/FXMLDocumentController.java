@@ -14,7 +14,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import modelo.OperacionesBodega;
 
 /**
  *
@@ -28,6 +30,8 @@ public class FXMLDocumentController implements Initializable {
     private TextArea TextArea;
     @FXML
     private WebView tablaProducto;
+    
+    WebEngine engine; 
     
      private boolean iniciar;
 
@@ -49,6 +53,13 @@ public class FXMLDocumentController implements Initializable {
         this.iniciar = iniciar;
     }
 
+public void mostrarTablaEnWebView(Bodega<Producto> bodega) {
+    
+    Bodega <Producto> bodega2=new Bodega<>();
+    OperacionesBodega<bodega.Base> a = new OperacionesBodega<>();
+    String html = a.hacerHtmlpila1(bodega2);
+    engine.loadContent(html);
+}
 
     
     
@@ -83,7 +94,7 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+       engine = tablaProducto.getEngine();
     }    
     
 }
