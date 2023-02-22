@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.web.WebView;
 
 /**
  *
@@ -24,8 +25,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Label label;
     @FXML
-    
-     private TextArea TextArea;
+    private TextArea TextArea;
+    @FXML
+    private WebView tablaProducto;
     
      private boolean iniciar;
 

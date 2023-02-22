@@ -14,10 +14,10 @@ import data.Producto;
  */
 public class tablas {
     
-    private String hacerHtmlpila() {
-        Bodega<Producto> E = new Bodega<>();
-String html = "<HTML><Table border=1 width=100%>";
-html += OperacionesBodega.generarHtml(bodega) + "</Table></HTML>";
-return html;
-}
+//    private String hacerHtmlpila() {
+//Bodega<Producto> E = new Bodega<>();
+//String html = "<HTML><Table border=1 width=100%>";
+//html += OperacionesBodega.generarHtml(bodega) + "</Table></HTML>";
+//return html;
+
 }
