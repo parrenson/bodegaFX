@@ -6,8 +6,12 @@
 package controlUI;
 
 import bodega.Bodega;
+import data.Agente;
 import data.Producto;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,7 +36,21 @@ public class FXMLDocumentController implements Initializable {
     private WebView tablaProducto;
     
     WebEngine engine; 
-    
+
+List<Agente> listaAgentes = new ArrayList<>();
+//creación de lista de agentes
+//public Agentes(){ 
+//listaAgentes.add(new Agente("Agente 1"));
+//listaAgentes.add(new Agente("Agente 2"));
+//listaAgentes.add(new Agente("Agente 3"));
+//for (Agente agente : listaAgentes) {
+//    if (agente.isLibre()) {
+//         El agente está libre, haz algo con él
+//        agente.setLibre(false);
+//        agente.setTiempo(System.currentTimeMillis());
+//    }
+//}
+//}    
      private boolean iniciar;
 
     /**
@@ -52,6 +70,11 @@ public class FXMLDocumentController implements Initializable {
     public void setIniciar(boolean iniciar) {
         this.iniciar = iniciar;
     }
+    
+
+
+
+
 
 public void mostrarTablaEnWebView(Bodega<Producto> bodega) {
     
