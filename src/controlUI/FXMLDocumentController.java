@@ -39,7 +39,7 @@ public class FXMLDocumentController implements Initializable {
     private WebView tablaProducto; 
     
     Timeline time = new Timeline();
-    Bodega<Producto> bodega; 
+    Bodega<Producto> pilaProductos; 
 
     List<Agente> listaAgentes = new ArrayList<>();
 //creación de lista de agentes
@@ -57,7 +57,7 @@ public class FXMLDocumentController implements Initializable {
 //}    
 
     private void crearProductos() {
-       Bodega<Producto> pilaProductos = new Bodega<>();
+       pilaProductos = new Bodega<>();
        // Generar entre 1 a 5 productos cada segundo
         int cantidadProductos = (int)(Math.random() * 5) + 1;
         for (int i = 0; i < cantidadProductos; i++) {
@@ -70,23 +70,24 @@ public class FXMLDocumentController implements Initializable {
             // Añadir el producto a la bodega
             Producto objP = new Producto(nombre_producto, cantidad, valor, tiempo_despacho);
             pilaProductos.apilar(objP);
-            
+            // prueba            
             TextArea.setText(pilaProductos.toString());
        }
    }
     
     public String hacerHtmlpila1() {
-       
-
-String html = "<html><table border=1 width=100%> \n" ;
-html += OperacionesBodega.generarHtml(bodega) + "\n</table></html>";
-return html;
-}   
+        String html = "<html><table border=1 width=100%> \n" ;
+        html += OperacionesBodega.generarHtml(pilaProductos) + "\n</table></html>";
+        return html;
+    }   
     
     private void iniciarFuncion(){
         crearProductos();
         WebEngine engine = tablaProducto.getEngine();
         engine.loadContent(hacerHtmlpila1());
+        
+        
+        
     }
 
 
