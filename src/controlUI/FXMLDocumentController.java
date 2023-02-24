@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.util.Duration;
 import modelo.OperacionesBodega;
 
 /**
@@ -36,8 +39,10 @@ public class FXMLDocumentController implements Initializable {
     private WebView tablaProducto;
     
     WebEngine engine; 
+    Timeline time = new Timeline();
 
-List<Agente> listaAgentes = new ArrayList<>();
+
+    List<Agente> listaAgentes = new ArrayList<>();
 //creación de lista de agentes
 //public Agentes(){ 
 //listaAgentes.add(new Agente("Agente 1"));
@@ -51,48 +56,10 @@ List<Agente> listaAgentes = new ArrayList<>();
 //    }
 //}
 //}    
-     private boolean iniciar;
 
-    /**
-     * Get the value of iniciar
-     *
-     * @return the value of iniciar
-     */
-    public boolean isIniciar() {
-        return iniciar;
-    }
-
-    /**
-     * Set the value of iniciar
-     *
-     * @param iniciar new value of iniciar
-     */
-    public void setIniciar(boolean iniciar) {
-        this.iniciar = iniciar;
-    }
-    
-
-
-
-
-
-public void mostrarTablaEnWebView(Bodega<Producto> bodega) {
-    
-    Bodega <Producto> bodega2=new Bodega<>();
-    OperacionesBodega<bodega.Base> a = new OperacionesBodega<>();
-    String html = a.hacerHtmlpila1(bodega2);
-    engine.loadContent(html);
-}
-
-    
-    
-    @FXML
-    private void btnIniciar(ActionEvent event) {
-        
+    private void crearProductos() {
        Bodega<Producto> pilaProductos = new Bodega<>();
-       iniciar = true;
-       while(iniciar){
-            // Generar entre 1 a 5 productos cada segundo
+       // Generar entre 1 a 5 productos cada segundo
         int cantidadProductos = (int)(Math.random() * 5) + 1;
         for (int i = 0; i < cantidadProductos; i++) {
             // Generar un producto aleatorio
@@ -107,17 +74,32 @@ public void mostrarTablaEnWebView(Bodega<Producto> bodega) {
             
             TextArea.setText(pilaProductos.toString());
        }
-   
+   }
+
+
+
+
+    public void mostrarTablaEnWebView(Bodega<Producto> bodega) {
+    
+        Bodega <Producto> bodega2=new Bodega<>();
+        OperacionesBodega<bodega.Base> a = new OperacionesBodega<>();
+        String html = a.hacerHtmlpila1(bodega2);
+        engine.loadContent(html);
     }
-    
+
+
+    @FXML
+    private void btnIniciar(ActionEvent event) {
+      time.play();
     }
-    
-    
-        
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       engine = tablaProducto.getEngine();
+         time.setCycleCount(time.INDEFINITE);
+        time.getKeyFrames().add(new KeyFrame(Duration.seconds(1), (event) ->{
+            crearProductos();
+            engine = tablaProducto.getEngine();
+        }));
     }    
     
 }
