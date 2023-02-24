@@ -36,11 +36,10 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TextArea TextArea;
     @FXML
-    private WebView tablaProducto;
+    private WebView tablaProducto; 
     
-    WebEngine engine; 
     Timeline time = new Timeline();
-
+    Bodega<Producto> bodega; 
 
     List<Agente> listaAgentes = new ArrayList<>();
 //creación de lista de agentes
@@ -75,17 +74,22 @@ public class FXMLDocumentController implements Initializable {
             TextArea.setText(pilaProductos.toString());
        }
    }
-
-
-
-
-    public void mostrarTablaEnWebView(Bodega<Producto> bodega) {
     
-        Bodega <Producto> bodega2=new Bodega<>();
-        OperacionesBodega<bodega.Base> a = new OperacionesBodega<>();
-        String html = a.hacerHtmlpila1(bodega2);
-        engine.loadContent(html);
+    public String hacerHtmlpila1() {
+       
+
+String html = "<html><table border=1 width=100%> \n" ;
+html += OperacionesBodega.generarHtml(bodega) + "\n</table></html>";
+return html;
+}   
+    
+    private void iniciarFuncion(){
+        crearProductos();
+        WebEngine engine = tablaProducto.getEngine();
+        engine.loadContent(hacerHtmlpila1());
     }
+
+
 
 
     @FXML
@@ -97,8 +101,7 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
          time.setCycleCount(time.INDEFINITE);
         time.getKeyFrames().add(new KeyFrame(Duration.seconds(1), (event) ->{
-            crearProductos();
-            engine = tablaProducto.getEngine();
+            iniciarFuncion();
         }));
     }    
     
