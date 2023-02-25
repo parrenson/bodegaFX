@@ -40,8 +40,7 @@ public class FXMLDocumentController implements Initializable {
     
     Timeline time = new Timeline();
     Bodega<Producto> pilaProductos; 
-
-    List<Agente> listaAgentes = new ArrayList<>();
+    LinkedList<Agente> listaAgente;
 //creación de lista de agentes
 //public Agentes(){ 
 //listaAgentes.add(new Agente("Agente 1"));
@@ -70,29 +69,34 @@ public class FXMLDocumentController implements Initializable {
             // Añadir el producto a la bodega
             Producto objP = new Producto(nombre_producto, cantidad, valor, tiempo_despacho);
             pilaProductos.apilar(objP);
-            // prueba            
-            TextArea.setText(pilaProductos.toString());
-       }
-   }
-    
+        }
+        // prueba            
+//        TextArea.setText(pilaProductos.toString());
+    }
+    private void verificarAgentes() {
+        for(int i = 0; i < listaAgente.size(); i++) {
+           Agente objA = listaAgente.get(i);
+           if(objA.getEstado() == true && !pilaProductos.estoyvacio()) {
+               Producto producto = pilaProductos.desapilar();
+               objA.setEstado(false);
+               objA.setTiempo(producto.getTiempo_despacho());
+               objA.calcularTiempoTotal();
+               objA.calcularTotalProductos();
+           }
+        }
+        TextArea.setText(listaAgente.toString());
+    }
     public String hacerHtmlpila1() {
         String html = "<html><table border=1 width=100%> \n" ;
         html += OperacionesBodega.generarHtml(pilaProductos) + "\n</table></html>";
         return html;
     }   
-    
     private void iniciarFuncion(){
         crearProductos();
+        verificarAgentes();
         WebEngine engine = tablaProducto.getEngine();
-        engine.loadContent(hacerHtmlpila1());
-        
-        
-        
+        engine.loadContent(hacerHtmlpila1());   
     }
-
-
-
-
     @FXML
     private void btnIniciar(ActionEvent event) {
       time.play();
@@ -100,7 +104,11 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         time.setCycleCount(time.INDEFINITE);
+        listaAgente = new LinkedList<>();
+        for(int i = 0; i < 3; i++) {
+            listaAgente.add(new Agente());
+        }
+        time.setCycleCount(time.INDEFINITE);
         time.getKeyFrames().add(new KeyFrame(Duration.seconds(1), (event) ->{
             iniciarFuncion();
         }));
